@@ -1,20 +1,20 @@
-package dao;
+package com.priyankavats.dao;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity("metrics")
+@Entity("alerts")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Metric {
+public class Alert {
 	
 	@Id
     private long timeStamp;
-	
     private int value;
-
-    public Metric() {
+    private String type;
+    
+    public Alert() {
     }
 
 	public long getTimeStamp() {
@@ -23,6 +23,14 @@ public class Metric {
 
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public int getValue() {
@@ -35,7 +43,7 @@ public class Metric {
 
 	@Override
 	public String toString() {
-		return "Metric [timeStamp=" + timeStamp + ", value=" + value + "]";
+		return "Alert [timeStamp=" + timeStamp + ", value=" + value + "]";
 	}
 
     
