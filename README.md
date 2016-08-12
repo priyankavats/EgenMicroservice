@@ -15,7 +15,8 @@ The value in the **first inserted metric is assumed to be the base weight**. Thi
 6. Java 7 or above
 
 ### How to run
-1. For the [sensor emulator](https://github.com/egen/sensor-emulator): run the program with this command: ```java -jar -Dbase.value=20 -Dapi.url=http://localhost:8080/metrics/create sensor-emulator-0.0.1-SNAPSHOT.jar```. base.value can be of your choice (Please not the path. Rest is the same as original instructions).
+1. Start your MongoDB server.
+2. For the [sensor emulator](https://github.com/egen/sensor-emulator): run the program with this command: ```java -jar -Dbase.value=20 -Dapi.url=http://localhost:8080/metrics/create sensor-emulator-0.0.1-SNAPSHOT.jar```. base.value can be of your choice (Please not the path. Rest is the same as original instructions).
 2. Build the EgenMicroservice package using this command ```mvn package```
 3. This will run the unit tests and build the jar
 3. Run using: ```java -jar target/priyankavats-egen-springboot-0.1.0.jar```
