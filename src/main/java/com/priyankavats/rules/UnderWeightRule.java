@@ -3,28 +3,41 @@ package com.priyankavats.rules;
 import org.easyrules.annotation.Action;
 import org.easyrules.annotation.Condition;
 import org.easyrules.annotation.Rule;
-import org.mongodb.morphia.query.Query;
 
-import com.priyankavats.controllers.Application;
+import com.priyankavats.dao.AlertDao;
+import com.priyankavats.dao.MetricDao;
 import com.priyankavats.models.Alert;
 import com.priyankavats.models.Metric;
 
 @Rule(name = "UnderWeightRule")
 public class UnderWeightRule {
-
-	private Metric currentMetric;
+	
+	private MetricDao metricDao;
+	private AlertDao alertDao;
+	
 	private Metric firstMetric;
+	private Metric currentMetric;
+	
+	public UnderWeightRule() {
+		metricDao = new MetricDao();
+		alertDao = new AlertDao();
+	}
 
 	@Condition
 	public boolean when() {
 
-		final Query<Metric> query = Application.getDatastore().createQuery(Metric.class);
-		currentMetric = query.order("-timeStamp").get();
-		firstMetric = query.order("timeStamp").get();
+		// only need to get the first metric once
+		if (firstMetric == null) {
+			firstMetric = metricDao.getMetric("timeStamp");
+		}
+		
+		currentMetric = metricDao.getMetric("-timeStamp");
+		
+		if (firstMetric == null || currentMetric == null) {
+			return false;
+		}
 
-		float difference = (float) firstMetric.getValue() - currentMetric.getValue();
-
-		return (difference > (float) firstMetric.getValue() / 10);
+		return currentMetric.getValue() < ((float) firstMetric.getValue() * 0.9);
 	}
 
 	@Action
@@ -35,8 +48,7 @@ public class UnderWeightRule {
 		newAlert.setType("Under weight");
 		newAlert.setValue(currentMetric.getValue());
 
-		// Creating new alert
-		Application.getDatastore().save(newAlert);
+		alertDao.create(newAlert);
 
 	}
 }

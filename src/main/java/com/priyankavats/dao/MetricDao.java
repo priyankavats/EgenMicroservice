@@ -4,22 +4,20 @@ import java.util.List;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.springframework.stereotype.Component;
 
 import com.priyankavats.controllers.Application;
 import com.priyankavats.models.Metric;
 
-@Component
 public class MetricDao {
 
 	private Datastore datastore;
-
+	
 	public MetricDao() {
 		datastore = Application.getDatastore();
 	}
 
 	public void create(Metric metric) {
-		Application.getDatastore().save(metric);
+		datastore.save(metric);
 	}
 
 	public List<Metric> readAll() {
@@ -35,6 +33,11 @@ public class MetricDao {
 				query.criteria("timeStamp").lessThanOrEq(endTime));
 		final List<Metric> metrics = query.asList();
 		return metrics;
+	}
+	
+	public Metric getMetric(String sort) {
+		final Query<Metric> query = datastore.createQuery(Metric.class);
+		return query.order(sort).get();
 	}
 
 }

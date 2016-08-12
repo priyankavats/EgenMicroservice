@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.springframework.stereotype.Component;
 
 import com.priyankavats.controllers.Application;
 import com.priyankavats.models.Alert;
-import com.priyankavats.models.Metric;
 
-@Component
 public class AlertDao {
 	
 	private Datastore datastore;
@@ -19,8 +16,8 @@ public class AlertDao {
 		datastore = Application.getDatastore();
 	}
 	
-	public void create(Metric metric) {
-        Application.getDatastore().save(metric);
+	public void create(Alert alert) {
+		datastore.save(alert);
 	}
 	
 	public List<Alert> readAll() {

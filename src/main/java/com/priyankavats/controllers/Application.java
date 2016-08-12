@@ -20,14 +20,13 @@ public class Application {
 	private static RulesEngine rulesEngine;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
 		morphia.mapPackage("com.priyankavats.models");
 		datastore = morphia.createDatastore(new MongoClient(), "EgenMicroservice");
 		datastore.ensureIndexes();
-		
 		rulesEngine = aNewRulesEngine().build();
         rulesEngine.registerRule(new UnderWeightRule());
         rulesEngine.registerRule(new OverWeightRule());
+		SpringApplication.run(Application.class, args);
 
 	}
 
