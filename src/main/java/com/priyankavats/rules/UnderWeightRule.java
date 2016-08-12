@@ -18,9 +18,9 @@ public class UnderWeightRule {
 	private Metric firstMetric;
 	private Metric currentMetric;
 	
-	public UnderWeightRule() {
-		metricDao = new MetricDao();
-		alertDao = new AlertDao();
+	public UnderWeightRule(MetricDao metricDao, AlertDao alertDao) {
+		this.metricDao = metricDao;
+		this.alertDao = alertDao;
 	}
 
 	@Condition

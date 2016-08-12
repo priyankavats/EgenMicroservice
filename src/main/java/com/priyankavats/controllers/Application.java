@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mongodb.MongoClient;
+import com.priyankavats.dao.AlertDao;
+import com.priyankavats.dao.MetricDao;
 import com.priyankavats.rules.OverWeightRule;
 import com.priyankavats.rules.UnderWeightRule;
 
@@ -24,8 +26,10 @@ public class Application {
 		datastore = morphia.createDatastore(new MongoClient(), "EgenMicroservice");
 		datastore.ensureIndexes();
 		rulesEngine = aNewRulesEngine().build();
-        rulesEngine.registerRule(new UnderWeightRule());
-        rulesEngine.registerRule(new OverWeightRule());
+		MetricDao metricDao = new MetricDao();
+		AlertDao alertDao = new AlertDao();
+        rulesEngine.registerRule(new UnderWeightRule(metricDao, alertDao));
+        rulesEngine.registerRule(new OverWeightRule(metricDao, alertDao));
 		SpringApplication.run(Application.class, args);
 
 	}

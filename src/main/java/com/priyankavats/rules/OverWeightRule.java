@@ -18,9 +18,9 @@ public class OverWeightRule {
 	private Metric firstMetric = null;
 	private Metric currentMetric = null;
 	
-	public OverWeightRule() {
-		metricDao = new MetricDao();
-		alertDao = new AlertDao();
+	public OverWeightRule(MetricDao metricDao, AlertDao alertDao) {
+		this.metricDao = metricDao;
+		this.alertDao = alertDao;
 	}
 
 	@Condition
