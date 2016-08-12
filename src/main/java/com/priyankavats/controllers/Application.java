@@ -7,6 +7,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import com.mongodb.MongoClient;
 import com.priyankavats.dao.AlertDao;
@@ -32,6 +33,18 @@ public class Application {
         rulesEngine.registerRule(new OverWeightRule(metricDao, alertDao));
 		SpringApplication.run(Application.class, args);
 
+	}
+	
+	@Bean
+	public MetricDao metricDao() {
+	   final MetricDao metricDao = new MetricDao();
+	   return metricDao;
+	}
+	
+	@Bean
+	public AlertDao alertDao() {
+	   final AlertDao alertDao = new AlertDao();
+	   return alertDao;
 	}
 
 	public static Datastore getDatastore() {

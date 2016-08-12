@@ -4,6 +4,7 @@ package com.priyankavats.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +17,8 @@ import com.priyankavats.models.Alert;
 @RequestMapping(value = "/alerts")
 public class AlertController {
 
-	private AlertDao alertDao = new AlertDao();
+	@Autowired
+	AlertDao alertDao;
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public List<Alert> read() {
