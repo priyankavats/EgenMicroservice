@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.priyankavats.dao.Alert;
+import com.priyankavats.models.Alert;
 
 @RestController
 @RequestMapping(value = "/alerts")

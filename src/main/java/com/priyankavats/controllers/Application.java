@@ -21,11 +21,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		morphia.mapPackage("com.priyankavats.dao");
-
-		// create the Datastore connecting to the default port on the local host
+		morphia.mapPackage("com.priyankavats.models");
 		datastore = morphia.createDatastore(new MongoClient(), "EgenMicroservice");
-		// datastore.getDB().dropDatabase();
 		datastore.ensureIndexes();
 		
 		rulesEngine = aNewRulesEngine().build();

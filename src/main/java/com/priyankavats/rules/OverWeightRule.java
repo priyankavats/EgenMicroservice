@@ -6,8 +6,8 @@ import org.easyrules.annotation.Rule;
 import org.mongodb.morphia.query.Query;
 
 import com.priyankavats.controllers.Application;
-import com.priyankavats.dao.Alert;
-import com.priyankavats.dao.Metric;
+import com.priyankavats.models.Alert;
+import com.priyankavats.models.Metric;
 
 @Rule(name = "OverWeightRule")
 public class OverWeightRule {

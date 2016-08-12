@@ -1,45 +1,51 @@
 package com.priyankavats.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.mongodb.morphia.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.priyankavats.dao.Metric;
+import com.priyankavats.dao.AlertDao;
+import com.priyankavats.dao.MetricDao;
+import com.priyankavats.models.Metric;
 
 @RestController
 @RequestMapping(value="/metrics")
 public class MetricController {
+	
+	@Autowired
+	MetricDao metricDao;
+	
+	@Autowired
+	AlertDao alertDao;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public void create(@RequestBody Metric metric) {
-        System.out.println(metric);        
-        Application.getDatastore().save(metric);
+    	metricDao.create(metric);
         Application.getRulesEngine().fireRules();
     }
     
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public List<Metric> read() {    	
-    	final Query<Metric> query = Application.getDatastore().createQuery(Metric.class);
-    	final List<Metric> metrics = query.asList();
-    	return metrics;  
+    public List<Metric> read() {
+    	try {
+    		return metricDao.readAll();
+    	} catch (Exception e) {
+    		return new ArrayList<Metric>();
+    	}
     }
     
     @RequestMapping(value = "/readByTimeRange/{startTime}/{endTime}", method = RequestMethod.GET)
     public List<Metric> readByTimeRange(@PathVariable long startTime, @PathVariable long endTime) {
-    	
-    	final Query<Metric> query = Application.getDatastore().createQuery(Metric.class);
-		query
-			.and(
-				query.criteria("timeStamp").greaterThanOrEq(startTime),
-				query.criteria("timeStamp").lessThanOrEq(endTime)
-				);
-    	final List<Metric> metrics = query.asList();
-    	return metrics;  
+    	try {
+    		return metricDao.readByTimeRange(startTime, endTime);
+    	} catch (Exception e) {
+    		return new ArrayList<Metric>();
+    	}    		  
     }
         
 
