@@ -2,7 +2,7 @@
 A microservice which consumes the sensor-emulator and creates metrics and alerts in MongoDB. It provides a REST API to view the metrics and alerts as well as query them.
 
 ## Assumptions and Implementation
-The application is implemented such that whenever a new metric is created, MongoDB is looked up to find the current (latest) metric and the first metric. Once the first metric is loaded it isn't reloaded again for the remainder of the application lifecycle to save needless db queries.
+When the application is first run, Morphia API creates a MongoDB datastore called EgenMicroservice. On subsequent runs of the application, if the datastore already exists, it does not recreate it. The application is implemented such that whenever a new metric is created, MongoDB is looked up to find the current (latest) metric and the first metric. Once the first metric is loaded it isn't reloaded again for the remainder of the application lifecycle to save needless db queries.
 
 The value in the **first inserted metric is assumed to be the base weight**. This is one quick way of keeping the sensor and the API in sync without passing additional arguments manually while running the application.
 
