@@ -1,4 +1,3 @@
-
 package com.priyankavats.controllers;
 
 import java.util.ArrayList;
@@ -13,6 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.priyankavats.dao.AlertDao;
 import com.priyankavats.models.Alert;
 
+/**
+ * The Class AlertController. Used for our api endpoint /alerts It allows these
+ * endpoints:
+ * 
+ * GET /alerts/read 
+ * GET /alerts/readByTimeRange/{startTime}/{endTime}
+ * 
+ * @author Priyanka Vats
+ */
 @RestController
 @RequestMapping(value = "/alerts")
 public class AlertController {
@@ -20,6 +28,12 @@ public class AlertController {
 	@Autowired
 	AlertDao alertDao;
 
+	/**
+	 * Gets all the alerts available and sends the entire list of metrics as a
+	 * JSONArray
+	 *
+	 * @return json list of metrics
+	 */
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public List<Alert> read() {
 		try {
@@ -29,6 +43,13 @@ public class AlertController {
 		}
 	}
 
+	/**
+	 * Gets all the alerts between a given start and endtime
+	 *
+	 * @param startTime the start timestamp
+	 * @param endTime the end timestamp
+	 * @return json list of metrics
+	 */
 	@RequestMapping(value = "/readByTimeRange/{startTime}/{endTime}", method = RequestMethod.GET)
 	public List<Alert> readByTimeRange(@PathVariable long startTime, @PathVariable long endTime) {
 		try {

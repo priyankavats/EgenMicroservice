@@ -15,13 +15,29 @@ import com.priyankavats.dao.MetricDao;
 import com.priyankavats.rules.OverWeightRule;
 import com.priyankavats.rules.UnderWeightRule;
 
+/**
+ * SpringBootApplication which initiliazes our beans as well as the
+ * DataStore. It also initializes the RulesEngine.
+ * 
+ * @author Priyanka Vats
+ */
 @SpringBootApplication
 public class Application {
 
+	/** The Constant morphia. */
 	final static Morphia morphia = new Morphia();
+	
+	/** The datastore. */
 	private static Datastore datastore = null;
+	
+	/** The rules engine. */
 	private static RulesEngine rulesEngine;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		morphia.mapPackage("com.priyankavats.models");
 		datastore = morphia.createDatastore(new MongoClient(), "EgenMicroservice");
@@ -35,22 +51,42 @@ public class Application {
 
 	}
 	
+	/**
+	 * Metric dao.
+	 *
+	 * @return the metric dao
+	 */
 	@Bean
 	public MetricDao metricDao() {
 	   final MetricDao metricDao = new MetricDao();
 	   return metricDao;
 	}
 	
+	/**
+	 * Alert dao.
+	 *
+	 * @return the alert dao
+	 */
 	@Bean
 	public AlertDao alertDao() {
 	   final AlertDao alertDao = new AlertDao();
 	   return alertDao;
 	}
 
+	/**
+	 * Gets the datastore.
+	 *
+	 * @return the datastore
+	 */
 	public static Datastore getDatastore() {
 		return datastore;
 	}
 	
+	/**
+	 * Gets the rules engine.
+	 *
+	 * @return the rules engine
+	 */
 	public static RulesEngine getRulesEngine() {
 		return rulesEngine;
 	}
